@@ -89,5 +89,6 @@
 .img-list{
 	width: 750rpx;
 	height:300rpx;
+	margin-bottom: 20rpx;
 }
 

@@ -1,8 +1,8 @@
 <template>
-	<view class="lazy-image" :id="uuid">
-		<image class="real-image" @load="onLoaded" :src="appear?realSrc:''" mode="aspectFill"></image>
+	<view class="lazy-image">
+		<image class="real-image" @load="onLoaded" :src="realSrc" mode="aspectFit"></image>
 		<view :class="loaded?'loaded':''">
-			<image :src="placeholdSrc" mode="aspectFill"></image>
+			<image :src="placeholdSrc" mode="aspectFit"></image>
 		</view>
 	</view>
 </template>
@@ -19,63 +19,14 @@
 				default:""
 			}
 		},
-		data() {
+		data(){
 			return {
-				loaded:false,
-				windowHeight:0,
-				uuid:"",
-				appear:false
-			};
-		},
-		created() {
-			this.uuid = this.makeUuid(32)
-		},
-		onLoad() {
-			this.windowHeight = uni.getSystemInfoSync().windowHeight;
-		},
-		onReady(){
-			this.checkAppear()
-		},
-		onPageScroll() {
-			this.checkAppear()
+				loaded:false
+			}
 		},
 		methods:{
-			checkAppear(){
-				if(this.uuid){
-					uni.createSelectorQuery().selectAll("#"+this.uuid).boundingClientRect((images) => {
-						images.forEach((image, index) => {
-							if (image.top <= this.windowHeight) {
-								if(this.appear){
-									return
-								}
-								this.appear = true;
-								this.uuid = "";
-							}
-						})
-					}).exec()
-				}
-			},
 			onLoaded(){
-				this.loaded = true;
-			},
-			makeUuid(len, radix) {
-				var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
-				var uuid = [], i;
-				radix = radix || chars.length;
-				if (len) {
-					for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix];
-				} else {
-					var r;
-					uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
-					uuid[14] = '4';
-					for (i = 0; i < 36; i++) {
-						if (!uuid[i]) {
-							r = 0 | Math.random() * 16;
-							uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
-						}
-					}
-				}
-				return uuid.join('');
+				this.loaded = true
 			}
 		}
 	}

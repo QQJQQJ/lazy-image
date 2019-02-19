@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="img-list" v-for="(item,index) in list" :key="index">
-			<lazy-image :realSrc="item.src" :placeholdSrc="placeholderSrc"></lazy-image>
+			<lazy-image class="lazy-image" :realSrc="item.src" :placeholdSrc="placeholderSrc"></lazy-image>
 		</view>
 	</view>
 </template>
@@ -23,7 +23,6 @@
 					loaded: false
 				})
 			}
-			
 			return {
 				placeholderSrc: '../../../static/60x60.png',
 				list: list,
@@ -36,5 +35,6 @@
 .img-list{
 	width: 750upx;
 	height:300upx;
+	margin-bottom: 20upx;;
 }
 </style>
